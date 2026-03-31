@@ -27,6 +27,14 @@ class Particle {
     return removeOnOutOfBounds;
   }
   
+  OrderedPair getPosition() {
+    return position;
+  }
+  
+  float distance(Particle other) {
+    return position.distance(other.getPosition());
+  }
+  
   void tick() {
     updateVelocity();
     updatePosition();

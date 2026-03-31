@@ -36,6 +36,11 @@ class OrderedPair {
   OrderedPair divided(float scalar) {
     return new OrderedPair(x / scalar, y / scalar);
   }
+  
+  float distance(OrderedPair other) {
+    OrderedPair translated = other.subtracted(this);
+    return (float)(Math.sqrt(translated.dot(translated)));
+  }
 
   void add(OrderedPair other) {
     x += other.x;
