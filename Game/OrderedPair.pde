@@ -8,6 +8,11 @@ class OrderedPair {
     this.x = x;
     this.y = y;
   }
+  
+  OrderedPair(OrderedPair p) {
+    x = p.getX();
+    y = p.getY();
+  }
 
   @Override
   String toString() {
@@ -43,7 +48,12 @@ class OrderedPair {
   }
   
   float angle(OrderedPair other) {
-    return atan2(y-other.getY(), x-other.getX());
+    return atan2(other.getY() - y, other.getX() - x);
+  }
+  
+  void clear() {
+    x = 0;
+    y = 0;
   }
 
   void add(OrderedPair other) {
@@ -64,5 +74,10 @@ class OrderedPair {
   void divide(float scalar) {
     x /= scalar;
     y /= scalar;
+  }
+  
+  void disp() {
+    fill(100);
+    ellipse(x, y, 2, 2);
   }
 }

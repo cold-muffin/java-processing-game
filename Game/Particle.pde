@@ -65,7 +65,18 @@ class Particle {
   }
   
   void addGravity(float constant, Particle p2) {
+    float m1 = mass;
+    float m2 = p2.getMass();
+    float r = position.distance(p2.getPosition());
+    float Fg = (float)(constant*m1*m2/Math.pow(r, 2));
     
+    float theta = position.angle(p2.getPosition());
+    force.add(new OrderedPair(cos(theta)*Fg, sin(theta)*Fg));
+  }
+  
+  void updateGravity(float constant, Particle p2) {
+    force.clear();
+    addGravity(constant, p2);
   }
   
   void setForce(OrderedPair vector) {
@@ -121,6 +132,7 @@ class Particle {
   }
   
   void disp(float diameter) {
+    fill(255);
     ellipse(position.getX(), position.getY(), diameter, diameter);
   }
   
