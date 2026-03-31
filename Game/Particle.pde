@@ -64,4 +64,8 @@ class Particle {
     float radius = diameter/2;
     ellipse(position.getX()-radius, position.getY()-radius, diameter, diameter);
   }
+  
+  void disp(PImage image) {
+    image(image, position.getX(), position.getY(), 40, 20);
+  }
 }
