@@ -1,21 +1,43 @@
 class Particle {
-  int[] position = new int[2];
-  int[] velocity = new int[2];
-  int[] acceleration = new int[2];
+  OrderedPair position = new OrderedPair();
+  OrderedPair velocity = new OrderedPair();
+  OrderedPair acceleration = new OrderedPair();
   
-  int[] force = new int[2];
-  int[] momentum = new int[2];
+  OrderedPair force = new OrderedPair();
+  OrderedPair momentum = new OrderedPair();
   
   int charge = 0;
-  int mass = 0;
+  int mass = 1;
   
-  double secondsPerTick = 1.0/60;
+  float secondsPerTick = 1.0/60;
   
-  void tick() {
-  
+  Particle(float xPos, float yPos) {
+    position = new OrderedPair(xPos, yPos);
   }
   
-  void updateAcceleration() {
-    
+  void tick() {
+    updateVelocity();
+    updatePosition();
+  }
+  
+  void addAcceleration(OrderedPair vector) {
+    acceleration.add(vector);
+  }
+  
+  void updateVelocity() {
+    velocity.add(acceleration.multiplied(secondsPerTick));
+  }
+  
+  void addVelocity(OrderedPair vector) {
+    velocity.add(vector);
+  }
+  
+  void updatePosition() {
+    position.add(velocity.multiplied(secondsPerTick));
+  }
+  
+  void disp(float diameter) {
+    float radius = diameter/2;
+    ellipse(position.getX()-radius, position.getY()-radius, diameter, diameter);
   }
 }

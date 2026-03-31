@@ -1,19 +1,26 @@
 class OrderedPair {
-  double[] data = new double[2];
+  float[] data = new float[2];
   
-  OrderedPair(double x, double y) {
-    data = new double[] {x, y};
+  OrderedPair() {}
+  
+  OrderedPair(float x, float y) {
+    data = new float[] {x, y};
   }
   
-  double getX() {
+  @Override
+  String toString() {
+    return "("+data[0]+", "+data[1]+")";
+  }
+  
+  float getX() {
     return data[0];
   }
   
-  double getY() {
+  float getY() {
     return data[1];
   }
   
-  double dot(OrderedPair other) {
+  float dot(OrderedPair other) {
     return data[0]*other.getX() + data[1]*other.getY();
   }
   
@@ -25,11 +32,11 @@ class OrderedPair {
     return new OrderedPair(data[0]-other.getY(), data[1]-other.getY());
   }
   
-  OrderedPair multiplied(double scalar) {
+  OrderedPair multiplied(float scalar) {
     return new OrderedPair(data[0]*scalar, data[1]*scalar);
   }
   
-  OrderedPair divided(double scalar) {
+  OrderedPair divided(float scalar) {
     return new OrderedPair(data[0]/scalar, data[1]/scalar);
   }
   
@@ -43,12 +50,12 @@ class OrderedPair {
     data[1] -= other.getY();
   }
   
-  void multiply(double scalar) {
+  void multiply(float scalar) {
     data[0] *= scalar;
     data[1] *= scalar;
   }
   
-  void divide(double scalar) {
+  void divide(float scalar) {
     data[0] /= scalar;
     data[1] /= scalar;
   }
