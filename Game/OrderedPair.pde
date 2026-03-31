@@ -1,62 +1,59 @@
 class OrderedPair {
-  float[] data = new float[2];
-  
+  float x = 0;
+  float y = 0;
+
   OrderedPair() {}
-  
+
   OrderedPair(float x, float y) {
-    data = new float[] {x, y};
+    this.x = x;
+    this.y = y;
   }
-  
+
   @Override
   String toString() {
-    return "("+data[0]+", "+data[1]+")";
+    return "(" + x + ", " + y + ")";
   }
-  
-  float getX() {
-    return data[0];
-  }
-  
-  float getY() {
-    return data[1];
-  }
-  
+
+  float getX() { return x; }
+  float getY() { return y; }
+
   float dot(OrderedPair other) {
-    return data[0]*other.getX() + data[1]*other.getY();
+    return x * other.x + y * other.y;
   }
-  
+
   OrderedPair added(OrderedPair other) {
-    return new OrderedPair(data[0]+other.getX(), data[1]+other.getY());
+    return new OrderedPair(x + other.x, y + other.y);
   }
-  
+
   OrderedPair subtracted(OrderedPair other) {
-    return new OrderedPair(data[0]-other.getY(), data[1]-other.getY());
+    return new OrderedPair(x - other.x, y - other.y);
   }
-  
+
   OrderedPair multiplied(float scalar) {
-    return new OrderedPair(data[0]*scalar, data[1]*scalar);
+    return new OrderedPair(x * scalar, y * scalar);
   }
-  
+
   OrderedPair divided(float scalar) {
-    return new OrderedPair(data[0]/scalar, data[1]/scalar);
+    return new OrderedPair(x / scalar, y / scalar);
   }
-  
+
   void add(OrderedPair other) {
-    data[0] += other.getX();
-    data[1] += other.getY();
+    x += other.x;
+    y += other.y;
   }
-  
+
   void subtract(OrderedPair other) {
-    data[0] -= other.getX();
-    data[1] -= other.getY();
+    x -= other.x;
+    y -= other.y;
   }
-  
+
   void multiply(float scalar) {
-    data[0] *= scalar;
-    data[1] *= scalar;
+    x *= scalar;
+    y *= scalar;
   }
-  
+
   void divide(float scalar) {
-    data[0] /= scalar;
-    data[1] /= scalar;
+    x /= scalar;
+    y /= scalar;
   }
 }

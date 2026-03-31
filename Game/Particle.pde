@@ -8,7 +8,7 @@ class Particle {
   
   int charge = 0;
   int mass = 1;
-  float elasticity;
+  float elasticity = 0;
   
   float secondsPerTick = 1.0/60;
   boolean removeOnOutOfBounds = false;
