@@ -7,7 +7,7 @@ class Particle {
   OrderedPair momentum = new OrderedPair();
   
   int charge = 0;
-  int mass = 1;
+  float mass = 1.0;
   float elasticity = 0;
   
   float secondsPerTick = 1.0/60;
@@ -15,6 +15,11 @@ class Particle {
   
   Particle(float xPos, float yPos) {
     position = new OrderedPair(xPos, yPos);
+  }
+  
+  Particle(float xPos, float yPos, float mass) {
+    this(xPos, yPos);
+    this.mass = mass;
   }
   
   boolean isOutOfBounds(int xSize, int ySize) {
@@ -35,9 +40,34 @@ class Particle {
     return position.distance(other.getPosition());
   }
   
+  float getMass() {
+    return mass;
+  }
+  
   void tick() {
+    updateAcceleration();
     updateVelocity();
     updatePosition();
+  }
+  
+  void addGravity(float constant) {
+    force.add(new OrderedPair(0, mass*constant));
+  }
+  
+  void setForce(OrderedPair vector) {
+    force = vector;
+  }
+  
+  void addForce(OrderedPair vector) {
+    force.add(vector);
+  }
+  
+  void updateAcceleration() {
+    acceleration = force.divided(mass);
+  }
+  
+  void setAcceleration(OrderedPair vector) {
+    acceleration = vector;
   }
   
   void addAcceleration(OrderedPair vector) {
@@ -48,12 +78,24 @@ class Particle {
     velocity.add(acceleration.multiplied(secondsPerTick));
   }
   
+  void setVelocity(OrderedPair vector) {
+    velocity = vector;
+  }
+  
   void addVelocity(OrderedPair vector) {
     velocity.add(vector);
   }
   
   void updatePosition() {
     position.add(velocity.multiplied(secondsPerTick));
+  }
+  
+  void setPosition(OrderedPair vector) {
+    position = vector;
+  }
+  
+  void addPosition(OrderedPair vector) {
+    position.add(vector);
   }
   
   void setRemoveOnOutOfBounds(boolean b) {
