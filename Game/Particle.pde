@@ -11,7 +11,9 @@ class Particle {
   float elasticity = 0;
   
   float secondsPerTick = 1.0/60;
+  
   boolean removeOnOutOfBounds = false;
+  boolean useDynamicGravity = false;
   
   Particle(float xPos, float yPos) {
     position = new OrderedPair(xPos, yPos);
@@ -30,6 +32,10 @@ class Particle {
   
   boolean getRemoveOnOutOfBounds() {
     return removeOnOutOfBounds;
+  }
+  
+  boolean getUseDynamicGravity() {
+    return useDynamicGravity;
   }
   
   OrderedPair getPosition() {
@@ -102,9 +108,12 @@ class Particle {
     removeOnOutOfBounds = b;
   }
   
+  void setUseDynamicGravity(boolean b) {
+    useDynamicGravity = b;
+  }
+  
   void disp(float diameter) {
-    float radius = diameter/2;
-    ellipse(position.getX()-radius, position.getY()-radius, diameter, diameter);
+    ellipse(position.getX(), position.getY(), diameter, diameter);
   }
   
   void disp(PImage image) {
