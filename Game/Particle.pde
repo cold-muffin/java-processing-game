@@ -46,6 +46,10 @@ class Particle {
     return position.distance(other.getPosition());
   }
   
+  float angle(Particle other) {
+    return position.angle(other.getPosition());
+  }
+  
   float getMass() {
     return mass;
   }
@@ -58,6 +62,10 @@ class Particle {
   
   void addGravity(float constant) {
     force.add(new OrderedPair(0, mass*constant));
+  }
+  
+  void addGravity(float constant, Particle p2) {
+    
   }
   
   void setForce(OrderedPair vector) {

@@ -41,6 +41,10 @@ class OrderedPair {
     OrderedPair translated = other.subtracted(this);
     return (float)(Math.sqrt(translated.dot(translated)));
   }
+  
+  float angle(OrderedPair other) {
+    return atan2(y-other.getY(), x-other.getX());
+  }
 
   void add(OrderedPair other) {
     x += other.x;

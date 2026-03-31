@@ -21,9 +21,8 @@ void setup() {
   helloWorld.addGravity(GRAVITATIONAL_CONSTANT);
   particles.add(helloWorld);
   
-  Particle heavy = new Particle(XSIZE/3, 0, 999);
-  heavy.addGravity(GRAVITATIONAL_CONSTANT);
-  particles.add(heavy);
+  Particle planet = new Particle(XSIZE/2, YSIZE/2, 9999);
+  particles.add(planet);
 }
 
 void draw() {
@@ -52,4 +51,6 @@ void draw() {
     mousePress = false;
     // Mouse press logic
   }
+  
+  System.out.println(particles.get(0).angle(particles.get(1)));
 }
