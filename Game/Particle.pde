@@ -8,11 +8,23 @@ class Particle {
   
   int charge = 0;
   int mass = 1;
+  float elasticity;
   
   float secondsPerTick = 1.0/60;
+  boolean removeOnOutOfBounds = false;
   
   Particle(float xPos, float yPos) {
     position = new OrderedPair(xPos, yPos);
+  }
+  
+  boolean isOutOfBounds(int xSize, int ySize) {
+    boolean outOfBoundsX = position.getX() < 0 || position.getX() > xSize;
+    boolean outOfBoundsY = position.getY() < 0 || position.getY() > ySize;
+    return outOfBoundsX || outOfBoundsY;
+  }
+  
+  boolean getRemoveOnOutOfBounds() {
+    return removeOnOutOfBounds;
   }
   
   void tick() {
@@ -34,6 +46,10 @@ class Particle {
   
   void updatePosition() {
     position.add(velocity.multiplied(secondsPerTick));
+  }
+  
+  void setRemoveOnOutOfBounds(boolean b) {
+    removeOnOutOfBounds = b;
   }
   
   void disp(float diameter) {
