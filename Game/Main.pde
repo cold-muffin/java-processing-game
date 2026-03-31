@@ -9,8 +9,11 @@ void setup() {
   noStroke();
   particles.add(new Particle(20, 20));
   particles.add(new Particle(20, 40));
-  particles.get(0).addVelocity(new OrderedPair(25, 0));
-  particles.get(1).addAcceleration(new OrderedPair(5, 0));
+  particles.add(new Particle(20, 60));
+  particles.get(0).addVelocity(new OrderedPair(100, 0));
+  particles.get(1).addAcceleration(new OrderedPair(98, 0));
+  particles.get(2).addVelocity(new OrderedPair(200, 0));
+  particles.get(2).addAcceleration(new OrderedPair(-98, 0));
 }
 
 void draw() {
