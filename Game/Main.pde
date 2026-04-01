@@ -9,7 +9,6 @@ final float GRAVITATIONAL_CONSTANT = 980;
 final float G = 667;
 
 ArrayList<Particle> particles = new ArrayList<>();
-ArrayDeque<OrderedPair> trail = new ArrayDeque<>();
 boolean mousePress = false;
 
 Particle planet = new Particle(XSIZE/2, YSIZE/2, 1000);
@@ -34,7 +33,6 @@ void draw() {
       p.updateGravity(G, planet);
     }
     p.tick();
-    trail.addFirst(new OrderedPair(p.getPosition()));
   }
   
   // Remove out of bounds particles
@@ -44,16 +42,6 @@ void draw() {
       particles.remove(i);
       i--;
     }
-  }
-  
-  // Display trail
-  for (OrderedPair p : trail) {
-    p.disp();
-  }
-  
-  // Display particle
-  for (Particle p : particles) {
-    p.disp(10);
   }
   
   if (mousePressed) {
@@ -68,12 +56,5 @@ void draw() {
     helloWorld.setUseDynamicGravity(true);
     helloWorld.addVelocity(new OrderedPair(0, 100));
     particles.add(helloWorld);
-    System.out.println(particles.get(particles.size()-1).force);
-    System.out.println(particles.get(particles.size()-1).getPosition());
-  }
-  
-  if (frameCount % 60 == 0) {
-    System.out.println(particles.get(particles.size()-1).force);
-    System.out.println(particles.get(particles.size()-1).getPosition());
   }
 }

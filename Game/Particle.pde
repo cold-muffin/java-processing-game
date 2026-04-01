@@ -12,6 +12,13 @@ class Particle {
   
   float secondsPerTick = 1.0/60;
   
+  boolean visible = true;
+  float diameter = 10;
+  
+  boolean dispTrail = true;
+  ArrayDeque<OrderedPair> trailSegments = new ArrayDeque<>();
+  int maxTrailSize = 100;
+  
   boolean removeOnOutOfBounds = false;
   boolean useDynamicGravity = false;
   
@@ -58,6 +65,20 @@ class Particle {
     updateAcceleration();
     updateVelocity();
     updatePosition();
+    
+    // Update trail
+    if (dispTrail) {
+      trailSegments.addFirst(new OrderedPair(position));
+      if (trailSegments.size() > maxTrailSize) {
+        trailSegments.removeLast();
+      }
+      dispTrailContinuous();
+    }
+    
+    // Disp particle
+    if (visible) {
+      disp();
+    }
   }
   
   void addGravity(float constant) {
@@ -131,12 +152,31 @@ class Particle {
     useDynamicGravity = b;
   }
   
-  void disp(float diameter) {
+  void disp() {
+    strokeWeight(2);
     fill(255);
     ellipse(position.getX(), position.getY(), diameter, diameter);
   }
   
   void disp(PImage image) {
     image(image, position.getX(), position.getY(), 40, 20);
+  }
+  
+  void dispTrailContinuous() {
+    stroke(100);
+    strokeWeight(2);
+    OrderedPair previous = null;
+    for (OrderedPair p : trailSegments) {
+      if (previous != null) {
+        line(previous.getX(), previous.getY(), p.getX(), p.getY());
+      }
+      previous = p;
+    }
+  }
+  
+  void dispTrailDiscrete() {
+    for (OrderedPair p : trailSegments) {
+      p.disp();
+    }
   }
 }
