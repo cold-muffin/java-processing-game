@@ -6,12 +6,12 @@ final int YSIZE = 600;
 final int PRESS_DELAY = 15;
 
 final float GRAVITATIONAL_CONSTANT = 980;
-final float G = 667;
+final float G = 66.7;
 
 ArrayList<Particle> particles = new ArrayList<>();
 boolean mousePress = false;
 
-Particle planet = new Particle(XSIZE/2, YSIZE/2, 1000);
+Particle planet = new Particle(XSIZE/2, YSIZE/2, 3000);
 
 void settings() {
   size(XSIZE, YSIZE);
@@ -55,10 +55,14 @@ void draw() {
   if (mousePress && frameCount % PRESS_DELAY == 0) {
     mousePress = false;
     // Mouse press logic
-    Particle helloWorld = new Particle(mouseX, mouseY, 50);
+    Particle helloWorld = new Particle(mouseX, mouseY, 1000);
+    Particle moon = new Particle(mouseX+20, mouseY, 50);
     helloWorld.setUseDynamicGravity(true);
-    helloWorld.addVelocity(new OrderedPair(0, 100));
+    moon.setUseDynamicGravity(true);
+    helloWorld.addVelocity(new OrderedPair(0, 50));
+    moon.addVelocity(new OrderedPair(0, 100));
     particles.add(helloWorld);
+    particles.add(moon);
     System.out.println("Mouse pressed: "+particles.size()+" particle(s) in simulation");
   }
 }
