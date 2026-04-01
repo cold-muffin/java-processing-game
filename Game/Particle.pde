@@ -19,7 +19,7 @@ class Particle {
   ArrayDeque<OrderedPair> trailSegments = new ArrayDeque<>();
   int maxTrailSize = 100;
   
-  boolean removeOnOutOfBounds = false;
+  boolean removeOnOutOfBounds = true;
   boolean useDynamicGravity = false;
   
   Particle(float xPos, float yPos) {
@@ -72,7 +72,7 @@ class Particle {
       if (trailSegments.size() > maxTrailSize) {
         trailSegments.removeLast();
       }
-      dispTrailContinuous();
+      dispTrailDiscrete();
     }
     
     // Disp particle
