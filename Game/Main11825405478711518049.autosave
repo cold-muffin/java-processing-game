@@ -1,17 +1,18 @@
 import java.util.ArrayList;
-import java.util.ArrayDeque;
 
 final int XSIZE = 1200;
 final int YSIZE = 700;
 final int PRESS_DELAY = 15;
 
 final float GRAVITATIONAL_CONSTANT = 980;
-final float G = 100.7;
+final float G = 200;
 
 ArrayList<Particle> particles = new ArrayList<>();
 boolean mousePress = false;
+float mass = 1000;
+float velocity = 200;
 
-Particle planet = new Particle(XSIZE/2, YSIZE/2, 3000);
+Particle planet = new Particle(XSIZE/2, YSIZE/2, 50000);
 
 void settings() {
   size(XSIZE, YSIZE);
@@ -20,18 +21,6 @@ void settings() {
 void setup() {
   background(0);
   noStroke();
-  summonPlanetMoon(750, 350);
-}
-
-void summonPlanetMoon(float xPos, float yPos) {
-    Particle helloWorld = new Particle(xPos, yPos, 1000);
-    Particle moon = new Particle(xPos+40, yPos, 50);
-    helloWorld.setUseDynamicGravity(true);
-    moon.setUseDynamicGravity(true);
-    helloWorld.addVelocity(new OrderedPair(0, 50));
-    moon.addVelocity(new OrderedPair(0, 100));
-    particles.add(helloWorld);
-    particles.add(moon);
 }
 
 void draw() {
@@ -41,8 +30,7 @@ void draw() {
   planet.disp();
   for (Particle p1 : particles) {
     if (p1.getUseDynamicGravity()) {
-      p1.force.clear();
-      p1.addGravity(G, planet);
+      p1.updateGravity(G, planet);
       for (Particle p2 : particles) {
         if (p1 != p2) {
           p1.addGravity(G, p2);
@@ -68,7 +56,11 @@ void draw() {
   if (mousePress && frameCount % PRESS_DELAY == 0) {
     mousePress = false;
     // Mouse press logic
+    Particle helloWorld = new Particle(mouseX, mouseY, mass);
+    mass = 10;
+    helloWorld.setUseDynamicGravity(true);
+    helloWorld.addVelocity(new OrderedPair(0, velocity));
+    particles.add(helloWorld);
     System.out.println("Mouse pressed: "+particles.size()+" particle(s) in simulation");
-    System.out.println("Pressed on ("+mouseX+", "+mouseY+")");
   }
 }

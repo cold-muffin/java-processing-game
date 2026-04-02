@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+
 class Particle {
   OrderedPair position = new OrderedPair();
   OrderedPair velocity = new OrderedPair();
@@ -11,16 +13,15 @@ class Particle {
   float elasticity = 0;
   
   float secondsPerTick = 1.0/60;
-  float ticksAlive = 0;
   
   boolean visible = true;
   float diameter = 10;
   
   boolean dispTrail = true;
   ArrayDeque<OrderedPair> trailSegments = new ArrayDeque<>();
-  int maxTrailSize = 500;
+  int maxTrailSize = 1000;
   
-  boolean removeOnOutOfBounds = true;
+  boolean removeOnOutOfBounds = false;
   boolean useDynamicGravity = false;
   
   Particle(float xPos, float yPos) {
@@ -63,19 +64,18 @@ class Particle {
   }
   
   void tick() {
-    ticksAlive++;
     updateAcceleration();
     updateVelocity();
     updatePosition();
     
     // Update trail
-    if (dispTrail && ticksAlive % 5 == 0) {
+    if (dispTrail) {
       trailSegments.addFirst(new OrderedPair(position));
       if (trailSegments.size() > maxTrailSize) {
         trailSegments.removeLast();
       }
+      dispTrailDiscrete();
     }
-    dispTrailDiscrete();
     
     // Disp particle
     if (visible) {
@@ -88,17 +88,18 @@ class Particle {
   }
   
   void addGravity(float constant, Particle p2) {
-    addGravity(constant, p2, 0);
-  }
-  
-  void addGravity(float constant, Particle p2, float min_eff_dist) {
     float m1 = mass;
     float m2 = p2.getMass();
     float r = position.distance(p2.getPosition());
-    float Fg = (float)( constant*m1*m2 / Math.pow(r+min_eff_dist, 2) );
+    float Fg = (float)(constant*m1*m2/Math.pow(r, 2));
     
     float theta = position.angle(p2.getPosition());
     force.add(new OrderedPair(cos(theta)*Fg, sin(theta)*Fg));
+  }
+  
+  void updateGravity(float constant, Particle p2) {
+    force.clear();
+    addGravity(constant, p2);
   }
   
   void setForce(OrderedPair vector) {
