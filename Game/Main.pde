@@ -3,15 +3,10 @@ import java.util.ArrayDeque;
 
 final int XSIZE = 1200;
 final int YSIZE = 700;
-final int PRESS_DELAY = 15;
 
 final float GRAVITATIONAL_CONSTANT = 980;
-final float G = 100.7;
 
-ArrayList<Particle> particles = new ArrayList<>();
-boolean mousePress = false;
-
-Particle planet = new Particle(XSIZE/2, YSIZE/2, 3000);
+ParticleSystem sim = new ParticleSystem(XSIZE, YSIZE);
 
 void settings() {
   size(XSIZE, YSIZE);
@@ -20,55 +15,24 @@ void settings() {
 void setup() {
   background(0);
   noStroke();
-  summonPlanetMoon(750, 350);
-}
-
-void summonPlanetMoon(float xPos, float yPos) {
-    Particle helloWorld = new Particle(xPos, yPos, 1000);
-    Particle moon = new Particle(xPos+40, yPos, 50);
-    helloWorld.setUseDynamicGravity(true);
-    moon.setUseDynamicGravity(true);
-    helloWorld.addVelocity(new OrderedPair(0, 50));
-    moon.addVelocity(new OrderedPair(0, 100));
-    particles.add(helloWorld);
-    particles.add(moon);
+  
+  Particle sun = new Particle(XSIZE/2, YSIZE/2, 3000);
+  
+  Particle planet = new Particle(750, 350, 1000);
+  planet.setUseDynamicGravity(true);
+  planet.addVelocity(new OrderedPair(0, 50));
+  
+  Particle moon = new Particle(790, 350, 50);
+  moon.setUseDynamicGravity(true);
+  moon.addVelocity(new OrderedPair(0, 100));
+  
+  sim.getParticles().add(sun);
+  sim.getParticles().add(planet);
+  sim.getParticles().add(moon);
 }
 
 void draw() {
   background(0);
   
-  // Update particles
-  planet.disp();
-  for (Particle p1 : particles) {
-    if (p1.getUseDynamicGravity()) {
-      p1.force.clear();
-      p1.addGravity(G, planet);
-      for (Particle p2 : particles) {
-        if (p1 != p2) {
-          p1.addGravity(G, p2);
-        }
-      }
-    }
-    p1.tick();
-  }
-  
-  // Remove out of bounds particles
-  for (int i=0; i<particles.size(); i++) {
-    Particle p = particles.get(i);
-    if (p.isOutOfBounds(XSIZE, YSIZE) && p.getRemoveOnOutOfBounds()) {
-      particles.remove(i);
-      i--;
-    }
-  }
-  
-  if (mousePressed) {
-    mousePress = true;
-  }
-   
-  if (mousePress && frameCount % PRESS_DELAY == 0) {
-    mousePress = false;
-    // Mouse press logic
-    System.out.println("Mouse pressed: "+particles.size()+" particle(s) in simulation");
-    System.out.println("Pressed on ("+mouseX+", "+mouseY+")");
-  }
+  sim.tick();
 }

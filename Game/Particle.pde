@@ -32,9 +32,9 @@ class Particle {
     this.mass = mass;
   }
   
-  boolean isOutOfBounds(int xSize, int ySize) {
-    boolean outOfBoundsX = position.getX() < 0 || position.getX() > xSize;
-    boolean outOfBoundsY = position.getY() < 0 || position.getY() > ySize;
+  boolean isOutOfBounds(float xLeft, float yLeft, float xRight, float yRight) {
+    boolean outOfBoundsX = position.getX() < xLeft || position.getX() > xRight;
+    boolean outOfBoundsY = position.getY() < yLeft || position.getY() > yRight;
     return outOfBoundsX || outOfBoundsY;
   }
   
@@ -103,6 +103,10 @@ class Particle {
   
   void setForce(OrderedPair vector) {
     force = vector;
+  }
+  
+  void clearForce() {
+    force.clear();
   }
   
   void addForce(OrderedPair vector) {
