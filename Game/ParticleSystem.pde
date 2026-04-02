@@ -30,7 +30,7 @@ class ParticleSystem {
   void removeOutOfBounds() {
     for (int i=0; i<particles.size(); i++) {
       Particle p = particles.get(i);
-      if (p.isOutOfBounds(xLeft, yLeft, xRight, yRight) && p.getRemoveOnOutOfBounds()) {
+      if (p.isOutOfBounds(xLeft, yLeft, xRight, yRight) && p.removeOnOutOfBounds()) {
         particles.remove(i);
         i--;
       }
@@ -39,7 +39,7 @@ class ParticleSystem {
   
   void updateGravity() {
     for (Particle p1 : particles) {
-      if (p1.getUseDynamicGravity()) {
+      if (p1.useDynamicGravity()) {
         p1.clearForce();
         for (Particle p2 : particles) {
           if (p1 != p2) {

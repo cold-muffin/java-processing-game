@@ -38,11 +38,11 @@ class Particle {
     return outOfBoundsX || outOfBoundsY;
   }
   
-  boolean getRemoveOnOutOfBounds() {
+  boolean removeOnOutOfBounds() {
     return removeOnOutOfBounds;
   }
   
-  boolean getUseDynamicGravity() {
+  boolean useDynamicGravity() {
     return useDynamicGravity;
   }
   
@@ -149,12 +149,20 @@ class Particle {
     position.add(vector);
   }
   
-  void setRemoveOnOutOfBounds(boolean b) {
+  void removeOnOutOfBounds(boolean b) {
     removeOnOutOfBounds = b;
   }
   
-  void setUseDynamicGravity(boolean b) {
+  void useDynamicGravity(boolean b) {
     useDynamicGravity = b;
+  }
+  
+  void dispTrail(boolean b) {
+    this.dispTrail = b;
+  }
+  
+  void setDiameter(float diameter) {
+    this.diameter = diameter;
   }
   
   void disp() {
